@@ -1,13 +1,12 @@
 package br.com.example.brunogodoif.vrminiautorizador.infrastructure.controllers;
 
-import br.com.example.brunogodoif.vrminiautorizador.application.usecases.CreateCard;
-import br.com.example.brunogodoif.vrminiautorizador.application.usecases.GetBalance;
+import br.com.example.brunogodoif.vrminiautorizador.application.domain.usecases.CreateCardInterface;
+import br.com.example.brunogodoif.vrminiautorizador.application.domain.usecases.GetBalanceInterface;
 import br.com.example.brunogodoif.vrminiautorizador.infrastructure.controllers.dtos.request.CardCreateRequest;
 import br.com.example.brunogodoif.vrminiautorizador.infrastructure.controllers.dtos.response.CardCreatedResponse;
 import br.com.example.brunogodoif.vrminiautorizador.infrastructure.controllers.exceptions.InvalidCardNumberException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CardController {
 
-    @Autowired
-    private final CreateCard createCard;
+    private final CreateCardInterface createCard;
 
-    @Autowired
-    private final GetBalance getBalance;
-
+    private final GetBalanceInterface getBalance;
 
     @PostMapping
     public ResponseEntity<CardCreatedResponse> createCard(@Valid @RequestBody CardCreateRequest cardCreateRequest) {

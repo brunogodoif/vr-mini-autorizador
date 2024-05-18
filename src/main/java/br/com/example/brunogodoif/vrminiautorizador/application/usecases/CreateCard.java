@@ -1,6 +1,7 @@
 package br.com.example.brunogodoif.vrminiautorizador.application.usecases;
 
 import br.com.example.brunogodoif.vrminiautorizador.application.domain.entity.Card;
+import br.com.example.brunogodoif.vrminiautorizador.application.domain.usecases.CreateCardInterface;
 import br.com.example.brunogodoif.vrminiautorizador.application.gateways.CardGatewayInterface;
 import br.com.example.brunogodoif.vrminiautorizador.application.usecases.exceptions.CardDuplicateException;
 import br.com.example.brunogodoif.vrminiautorizador.infrastructure.controllers.dtos.request.CardCreateRequest;
@@ -11,13 +12,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CreateCard {
+public class CreateCard implements CreateCardInterface {
 
     private final CardGatewayInterface cardGateway;
 
     @Value("${default.card.balance}")
     private Long defaultCardBalance;
 
+    @Override
     public CardCreatedResponse execute(CardCreateRequest cardCreateRequest) {
 
         if (cardGateway.cardExists(cardCreateRequest.getNumeroCartao()))

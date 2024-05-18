@@ -1,4 +1,6 @@
 package br.com.example.brunogodoif.vrminiautorizador.application.usecases;
 
-public class MakeCardTransaction {
+import br.com.example.brunogodoif.vrminiautorizador.application.domain.usecases.MakeCardTransactionInterface;
+
+public class MakeCardTransaction implements MakeCardTransactionInterface {
 }
