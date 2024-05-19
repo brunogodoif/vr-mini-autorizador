@@ -7,5 +7,5 @@ import java.util.List;
 public interface CardTransactionGatewayInterface {
     List<CardTransaction> getAllTransactions();
 
-    CardTransaction makeTransaction(CardTransaction cardTransaction);
+    CardTransaction persistTransaction(CardTransaction cardTransaction);
 }

@@ -1,11 +1,12 @@
 package br.com.example.brunogodoif.vrminiautorizador.infrastructure.gateways;
 
-import br.com.example.brunogodoif.vrminiautorizador.application.domain.entity.Card;
+import br.com.example.brunogodoif.vrminiautorizador.application.domain.entity.UpdateBalance;
 import br.com.example.brunogodoif.vrminiautorizador.application.gateways.CardGatewayInterface;
 import br.com.example.brunogodoif.vrminiautorizador.infrastructure.gateways.exceptions.CardNotFoundException;
 import br.com.example.brunogodoif.vrminiautorizador.infrastructure.mapper.CardMapper;
-import br.com.example.brunogodoif.vrminiautorizador.infrastructure.persistence.entities.CardEntity;
+import br.com.example.brunogodoif.vrminiautorizador.infrastructure.persistence.entities.Card;
 import br.com.example.brunogodoif.vrminiautorizador.infrastructure.persistence.repositories.CardRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,15 +20,15 @@ public class CardGateway implements CardGatewayInterface {
     private final CardMapper cardMapper;
 
     @Override
-    public Card createCard(Card card) {
-        CardEntity cardEntity = cardMapper.toEntity(card);
-        CardEntity cardCreated = cardRepository.save(cardEntity);
+    public br.com.example.brunogodoif.vrminiautorizador.application.domain.entity.Card createCard(br.com.example.brunogodoif.vrminiautorizador.application.domain.entity.Card card) {
+        Card cardEntity = cardMapper.toEntity(card);
+        Card cardCreated = cardRepository.save(cardEntity);
         return cardMapper.toDomainObj(cardCreated);
     }
 
     @Override
-    public Card getCard(String cardNumber) {
-        Optional<CardEntity> byCardNumber = cardRepository.findByCardNumber(cardNumber);
+    public br.com.example.brunogodoif.vrminiautorizador.application.domain.entity.Card getCard(String cardNumber) {
+        Optional<Card> byCardNumber = cardRepository.findByCardNumber(cardNumber);
         return byCardNumber.map(cardMapper::toDomainObj).orElseThrow(() -> new CardNotFoundException("Card not found"));
     }
 
@@ -36,4 +37,15 @@ public class CardGateway implements CardGatewayInterface {
         return cardRepository.findByCardNumber(cardNumber).isPresent();
     }
 
+    @Override
+    @Transactional
+    public void updateBalance(UpdateBalance updateBalance) {
+        Optional<Card> cardEntityOpt = cardRepository.findByCardNumber(updateBalance.getCardNumber());
+        if (cardEntityOpt.isEmpty())
+            throw new CardNotFoundException("Card not found");
+
+        Card cardEntity = cardEntityOpt.get();
+        cardEntity.setBalance(updateBalance.getAmount());
+        cardRepository.save(cardEntity);
+    }
 }

@@ -2,6 +2,8 @@ package br.com.example.brunogodoif.vrminiautorizador.infrastructure.controllers;
 
 import br.com.example.brunogodoif.vrminiautorizador.application.usecases.exceptions.CardDuplicateException;
 import br.com.example.brunogodoif.vrminiautorizador.application.usecases.exceptions.CardNotFoundException;
+import br.com.example.brunogodoif.vrminiautorizador.application.usecases.exceptions.InsufficientBalanceException;
+import br.com.example.brunogodoif.vrminiautorizador.application.usecases.exceptions.InvalidPasswordException;
 import br.com.example.brunogodoif.vrminiautorizador.infrastructure.controllers.exceptions.InvalidCardNumberException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CardNotFoundException.class)
     public ResponseEntity<Object> handleCardNotFoundException(CardNotFoundException ex) {
+        String errorMessage = ex.getMessage();
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<Object> handleInvalidPasswordException(InvalidPasswordException ex) {
+        String errorMessage = ex.getMessage();
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(InsufficientBalanceException.class)
+    public ResponseEntity<Object> handleInsufficientBalanceException(InsufficientBalanceException ex) {
         String errorMessage = ex.getMessage();
         return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
     }

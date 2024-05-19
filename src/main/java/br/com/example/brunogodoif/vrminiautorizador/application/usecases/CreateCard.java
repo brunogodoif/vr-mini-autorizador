@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @RequiredArgsConstructor
 public class CreateCard implements CreateCardInterface {
@@ -17,7 +19,7 @@ public class CreateCard implements CreateCardInterface {
     private final CardGatewayInterface cardGateway;
 
     @Value("${default.card.balance}")
-    private Long defaultCardBalance;
+    private BigDecimal defaultCardBalance;
 
     @Override
     public CardCreatedResponse execute(CardCreateRequest cardCreateRequest) {

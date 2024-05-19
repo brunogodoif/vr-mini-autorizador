@@ -7,6 +7,8 @@ import br.com.example.brunogodoif.vrminiautorizador.application.usecases.excepti
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @RequiredArgsConstructor
 public class GetBalance implements GetBalanceInterface {
@@ -14,7 +16,7 @@ public class GetBalance implements GetBalanceInterface {
     private final CardGatewayInterface cardGateway;
 
     @Override
-    public Long execute(String cardNumber) {
+    public BigDecimal execute(String cardNumber) {
 
         if (!cardGateway.cardExists(cardNumber))
             throw new CardNotFoundException("Cartão não localizado.");

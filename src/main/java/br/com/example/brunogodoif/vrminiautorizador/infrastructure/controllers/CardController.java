@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping("/cartoes")
 @RequiredArgsConstructor
@@ -27,10 +29,10 @@ public class CardController {
     }
 
     @GetMapping("/{numeroCartao}")
-    public ResponseEntity<Long> getBalance(@PathVariable String numeroCartao) {
+    public ResponseEntity<BigDecimal> getBalance(@PathVariable String numeroCartao) {
         validateCardNumber(numeroCartao);
 
-        Long balance = getBalance.execute(numeroCartao);
+        BigDecimal balance = getBalance.execute(numeroCartao);
         return ResponseEntity.status(HttpStatus.CREATED).body(balance);
     }
 

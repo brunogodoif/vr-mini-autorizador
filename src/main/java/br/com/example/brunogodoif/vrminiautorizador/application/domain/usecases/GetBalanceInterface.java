@@ -1,5 +1,7 @@
 package br.com.example.brunogodoif.vrminiautorizador.application.domain.usecases;
 
+import java.math.BigDecimal;
+
 public interface GetBalanceInterface {
-    Long execute(String cardNumber);
+    BigDecimal execute(String cardNumber);
 }
