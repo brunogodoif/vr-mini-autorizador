@@ -12,7 +12,8 @@ import java.util.UUID;
 
 @Entity
 @Data
-public class Card implements Serializable {
+@Table(name = "cards")
+public class CardEntity implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     private UUID id;
@@ -34,7 +35,7 @@ public class Card implements Serializable {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<CardTransaction> transactions;
+    private List<CardTransactionEntity> transactions;
 
     @Version
     private Long version;

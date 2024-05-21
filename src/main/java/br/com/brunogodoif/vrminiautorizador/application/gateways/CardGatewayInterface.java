@@ -1,12 +1,13 @@
 package br.com.brunogodoif.vrminiautorizador.application.gateways;
 
 import br.com.brunogodoif.vrminiautorizador.application.domain.entity.Card;
-import br.com.brunogodoif.vrminiautorizador.application.domain.entity.UpdateBalance;
+import br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardCreate;
+import br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardUpdateBalance;
 
 public interface CardGatewayInterface {
-    Card createCard(Card card);
+    Card createCard(CardCreate card);
 
-    void updateBalance(UpdateBalance updateBalance);
+    boolean updateBalance(CardUpdateBalance cardUpdateBalance);
 
     Card getCard(String cardNumber);
 

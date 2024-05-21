@@ -11,14 +11,15 @@ import java.util.UUID;
 
 @Entity
 @Data
-public class CardTransaction implements Serializable {
+@Table(name = "card_transactions")
+public class CardTransactionEntity implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cardNumber", nullable = false)
-    private Card card;
+    private CardEntity card;
 
     @Column(nullable = false)
     private BigDecimal value;

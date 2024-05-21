@@ -6,38 +6,35 @@ import java.util.UUID;
 public class Card {
 
     private UUID id;
-    private String cardNumber;
-    private String password;
+    private CardNumber cardNumber;
+    private CardPassword cardPassword;
     private BigDecimal balance;
 
-    public Card(UUID id, String cardNumber, String password, BigDecimal balance) {
+    public Card(UUID id, CardNumber cardNumber, CardPassword cardPassword, BigDecimal balance) {
         this.id = id;
         this.cardNumber = cardNumber;
-        this.password = password;
+        this.cardPassword = cardPassword;
         this.balance = balance;
     }
 
-    public Card(String cardNumber, String password, BigDecimal balance) {
+    public Card(CardNumber cardNumber, CardPassword cardPassword) {
         this.cardNumber = cardNumber;
-        this.password = password;
-        this.balance = balance;
+        this.cardPassword = cardPassword;
     }
 
     public UUID getId() {
         return id;
     }
 
-    public String getCardNumber() {
+    public CardNumber getCardNumber() {
         return cardNumber;
     }
 
-    public String getPassword() {
-        return password;
+    public CardPassword getCardPassword() {
+        return cardPassword;
     }
 
     public BigDecimal getBalance() {
         return balance;
     }
-
-
 }

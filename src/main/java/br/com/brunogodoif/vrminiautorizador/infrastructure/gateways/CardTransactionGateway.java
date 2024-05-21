@@ -1,9 +1,12 @@
 package br.com.brunogodoif.vrminiautorizador.infrastructure.gateways;
 
+import br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardTransaction;
+import br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardTransactionCreate;
 import br.com.brunogodoif.vrminiautorizador.application.gateways.CardTransactionGatewayInterface;
+import br.com.brunogodoif.vrminiautorizador.infrastructure.gateways.exceptions.CardNotFoundException;
 import br.com.brunogodoif.vrminiautorizador.infrastructure.mapper.CardTransactionMapper;
-import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.entities.Card;
-import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.entities.CardTransaction;
+import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.entities.CardEntity;
+import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.entities.CardTransactionEntity;
 import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.repositories.CardRepository;
 import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.repositories.CardTransactionRepository;
 import jakarta.transaction.Transactional;
@@ -27,15 +30,15 @@ public class CardTransactionGateway implements CardTransactionGatewayInterface {
 
     @Override
     @Transactional
-    public br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardTransaction persistTransaction(br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardTransaction cardTransaction) {
-        Card card = cardRepository.findById(cardTransaction.getCard().getId())
-                .orElseThrow(() -> new RuntimeException("Card not found"));
+    public CardTransaction persistTransaction(CardTransactionCreate cardTransaction) {
 
+        CardEntity cardEntity = cardRepository.findByCardNumber(cardTransaction.getCard().getCardNumber().getNumber())
+                .orElseThrow(() -> new CardNotFoundException("Card not found"));
 
-        CardTransaction entity = cardTransactionMapper.toEntity(cardTransaction);
-        entity.setCard(card);
-        CardTransaction cardTransactionCreated = cardTransactionRepository.save(entity);
+        CardTransactionEntity entity = cardTransactionMapper.toEntity(cardTransaction);
+        entity.setCard(cardEntity);
+        CardTransactionEntity cardTransactionEntityCreated = cardTransactionRepository.save(entity);
 
-        return cardTransactionMapper.toDomainObject(cardTransactionCreated);
+        return cardTransactionMapper.toDomainObject(cardTransactionEntityCreated);
     }
 }

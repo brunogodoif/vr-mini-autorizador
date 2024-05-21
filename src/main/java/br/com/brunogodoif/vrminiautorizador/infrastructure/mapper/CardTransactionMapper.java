@@ -1,7 +1,10 @@
 package br.com.brunogodoif.vrminiautorizador.infrastructure.mapper;
 
-import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.entities.Card;
-import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.entities.CardTransaction;
+import br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardNumber;
+import br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardPassword;
+import br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardTransactionCreate;
+import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.entities.CardEntity;
+import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.entities.CardTransactionEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -9,35 +12,35 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CardTransactionMapper {
 
-    public br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardTransaction toDomainObject(CardTransaction cardTransaction) {
+    public br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardTransaction toDomainObject(CardTransactionEntity cardTransactionEntity) {
         br.com.brunogodoif.vrminiautorizador.application.domain.entity.Card card = new br.com.brunogodoif.vrminiautorizador.application.domain.entity.Card(
-                cardTransaction.getCard().getId(),
-                cardTransaction.getCard().getCardNumber(),
-                cardTransaction.getCard().getPassword(),
-                cardTransaction.getCard().getBalance()
+                cardTransactionEntity.getCard().getId(),
+                new CardNumber(cardTransactionEntity.getCard().getCardNumber()),
+                new CardPassword(cardTransactionEntity.getCard().getPassword()),
+                cardTransactionEntity.getCard().getBalance()
         );
 
         return new br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardTransaction(
-                cardTransaction.getId(),
+                cardTransactionEntity.getId(),
                 card,
-                cardTransaction.getValue(),
-                cardTransaction.getPreviousBalance(),
-                cardTransaction.getNewBalance(),
-                cardTransaction.getStatus(),
-                cardTransaction.getCreatedAt(),
-                cardTransaction.getUpdatedAt()
+                cardTransactionEntity.getValue(),
+                cardTransactionEntity.getPreviousBalance(),
+                cardTransactionEntity.getNewBalance(),
+                cardTransactionEntity.getStatus(),
+                cardTransactionEntity.getCreatedAt(),
+                cardTransactionEntity.getUpdatedAt()
         );
     }
 
-    public CardTransaction toEntity(br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardTransaction cardTransaction) {
+    public CardTransactionEntity toEntity(br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardTransaction cardTransaction) {
 
-        Card cardEntity = new Card();
+        CardEntity cardEntity = new CardEntity();
         cardEntity.setId(cardTransaction.getCard().getId());
-        cardEntity.setCardNumber(cardTransaction.getCard().getCardNumber());
-        cardEntity.setPassword(cardTransaction.getCard().getPassword());
+        cardEntity.setCardNumber(cardTransaction.getCard().getCardNumber().getNumber());
+        cardEntity.setPassword(cardTransaction.getCard().getCardPassword().getPassword());
         cardEntity.setBalance(cardTransaction.getCard().getBalance());
 
-        CardTransaction cardTransactionEntity = new CardTransaction();
+        CardTransactionEntity cardTransactionEntity = new CardTransactionEntity();
         cardTransactionEntity.setId(cardTransaction.getId());
         cardTransactionEntity.setCard(cardEntity);
         cardTransactionEntity.setValue(cardTransaction.getValue());
@@ -50,4 +53,20 @@ public class CardTransactionMapper {
         return cardTransactionEntity;
     }
 
+    public CardTransactionEntity toEntity(CardTransactionCreate cardTransaction) {
+        CardEntity cardEntity = new CardEntity();
+        cardEntity.setId(cardTransaction.getCard().getId());
+        cardEntity.setCardNumber(cardTransaction.getCard().getCardNumber().getNumber());
+        cardEntity.setPassword(cardTransaction.getCard().getCardPassword().getPassword());
+        cardEntity.setBalance(cardTransaction.getCard().getBalance());
+
+        CardTransactionEntity cardTransactionEntity = new CardTransactionEntity();
+        cardTransactionEntity.setCard(cardEntity);
+        cardTransactionEntity.setValue(cardTransaction.getValue());
+        cardTransactionEntity.setPreviousBalance(cardTransaction.getPreviousBalance());
+        cardTransactionEntity.setNewBalance(cardTransaction.getNewBalance());
+        cardTransactionEntity.setStatus(cardTransaction.getStatus().toString());
+
+        return cardTransactionEntity;
+    }
 }

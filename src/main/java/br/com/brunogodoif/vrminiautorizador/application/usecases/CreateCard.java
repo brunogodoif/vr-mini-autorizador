@@ -1,9 +1,12 @@
 package br.com.brunogodoif.vrminiautorizador.application.usecases;
 
 import br.com.brunogodoif.vrminiautorizador.application.domain.entity.Card;
+import br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardCreate;
+import br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardNumber;
+import br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardPassword;
+import br.com.brunogodoif.vrminiautorizador.application.domain.usecases.CreateCardInterface;
 import br.com.brunogodoif.vrminiautorizador.application.gateways.CardGatewayInterface;
 import br.com.brunogodoif.vrminiautorizador.application.usecases.exceptions.CardDuplicateException;
-import br.com.brunogodoif.vrminiautorizador.application.domain.usecases.CreateCardInterface;
 import br.com.brunogodoif.vrminiautorizador.infrastructure.controllers.dtos.request.CardCreateRequest;
 import br.com.brunogodoif.vrminiautorizador.infrastructure.controllers.dtos.response.CardCreatedResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +27,14 @@ public class CreateCard implements CreateCardInterface {
     @Override
     public CardCreatedResponse execute(CardCreateRequest cardCreateRequest) {
 
-        if (cardGateway.cardExists(cardCreateRequest.getNumeroCartao()))
+        CardNumber cardNumber = new CardNumber(cardCreateRequest.numeroCartao());
+        CardPassword cardPassword = new CardPassword(cardCreateRequest.senha());
+
+        if (cardGateway.cardExists(cardNumber.getNumber()))
             throw new CardDuplicateException("Cartão já existe na base de dados.");
 
-
-        Card cardToCreate = new Card(cardCreateRequest.getNumeroCartao(), cardCreateRequest.getSenha(), defaultCardBalance);
+        CardCreate cardToCreate = new CardCreate(cardNumber, cardPassword, defaultCardBalance);
         Card cardCreated = cardGateway.createCard(cardToCreate);
-        return new CardCreatedResponse(cardCreated.getCardNumber(), cardCreated.getPassword());
+        return new CardCreatedResponse(cardCreated.getCardNumber().getNumber(), cardCreated.getCardPassword().getPassword());
     }
 }
