@@ -6,11 +6,11 @@ import java.math.BigDecimal;
 
 public class CardTransactionCreate {
 
-    private Card card;
-    private BigDecimal value;
-    private BigDecimal previousBalance;
-    private BigDecimal newBalance;
-    private TransactionStatus status;
+    private final Card card;
+    private final BigDecimal value;
+    private final BigDecimal previousBalance;
+    private final BigDecimal newBalance;
+    private final TransactionStatus status;
 
     public CardTransactionCreate(Card card, BigDecimal value, BigDecimal previousBalance, BigDecimal newBalance, TransactionStatus status) {
         this.card = card;

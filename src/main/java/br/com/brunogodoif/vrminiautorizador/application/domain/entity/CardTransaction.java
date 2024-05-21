@@ -9,10 +9,10 @@ public class CardTransaction {
 
     private UUID id;
     private Card card;
-    private BigDecimal value;
-    private BigDecimal previousBalance;
-    private BigDecimal newBalance;
-    private String status;
+    private final BigDecimal value;
+    private final BigDecimal previousBalance;
+    private final BigDecimal newBalance;
+    private final String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

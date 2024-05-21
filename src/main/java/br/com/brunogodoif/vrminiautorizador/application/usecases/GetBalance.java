@@ -1,9 +1,9 @@
 package br.com.brunogodoif.vrminiautorizador.application.usecases;
 
 import br.com.brunogodoif.vrminiautorizador.application.domain.entity.Card;
+import br.com.brunogodoif.vrminiautorizador.application.domain.usecases.GetBalanceInterface;
 import br.com.brunogodoif.vrminiautorizador.application.gateways.CardGatewayInterface;
 import br.com.brunogodoif.vrminiautorizador.application.usecases.exceptions.CardNotFoundException;
-import br.com.brunogodoif.vrminiautorizador.application.domain.usecases.GetBalanceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

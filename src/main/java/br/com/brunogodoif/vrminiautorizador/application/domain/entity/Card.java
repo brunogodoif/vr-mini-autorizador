@@ -6,8 +6,8 @@ import java.util.UUID;
 public class Card {
 
     private UUID id;
-    private CardNumber cardNumber;
-    private CardPassword cardPassword;
+    private final CardNumber cardNumber;
+    private final CardPassword cardPassword;
     private BigDecimal balance;
 
     public Card(UUID id, CardNumber cardNumber, CardPassword cardPassword, BigDecimal balance) {

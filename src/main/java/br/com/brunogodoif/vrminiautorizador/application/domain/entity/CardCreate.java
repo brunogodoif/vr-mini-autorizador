@@ -1,11 +1,8 @@
 package br.com.brunogodoif.vrminiautorizador.application.domain.entity;
 
 import java.math.BigDecimal;
-import java.util.regex.Pattern;
 
 public class CardCreate {
-
-    private static final Pattern DIGITS_ONLY = Pattern.compile("\\d+");
 
     private final CardNumber card;
     private final CardPassword cardPassword;
