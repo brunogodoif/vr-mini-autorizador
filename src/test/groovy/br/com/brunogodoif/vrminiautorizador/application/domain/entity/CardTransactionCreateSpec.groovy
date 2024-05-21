@@ -4,6 +4,7 @@ import br.com.brunogodoif.vrminiautorizador.application.domain.entity.exceptions
 import spock.lang.Specification
 
 class CardTransactionCreateSpec extends Specification {
+
     def "Should create CardTransactionCreate with valid card and values"() {
         given:
         UUID id = UUID.randomUUID()
@@ -71,4 +72,5 @@ class CardTransactionCreateSpec extends Specification {
         then:
         thrown(InvalidTransactionException)
     }
+
 }

@@ -3,6 +3,7 @@ package br.com.brunogodoif.vrminiautorizador.infrastructure.mapper;
 import br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardNumber;
 import br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardPassword;
 import br.com.brunogodoif.vrminiautorizador.application.domain.entity.CardTransactionCreate;
+import br.com.brunogodoif.vrminiautorizador.application.domain.entity.TransactionStatus;
 import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.entities.CardEntity;
 import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.entities.CardTransactionEntity;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class CardTransactionMapper {
                 cardTransactionEntity.getValue(),
                 cardTransactionEntity.getPreviousBalance(),
                 cardTransactionEntity.getNewBalance(),
-                cardTransactionEntity.getStatus(),
+                TransactionStatus.valueOf(cardTransactionEntity.getStatus()),
                 cardTransactionEntity.getCreatedAt(),
                 cardTransactionEntity.getUpdatedAt()
         );
@@ -46,7 +47,7 @@ public class CardTransactionMapper {
         cardTransactionEntity.setValue(cardTransaction.getValue());
         cardTransactionEntity.setPreviousBalance(cardTransaction.getPreviousBalance());
         cardTransactionEntity.setNewBalance(cardTransaction.getNewBalance());
-        cardTransactionEntity.setStatus(cardTransaction.getStatus());
+        cardTransactionEntity.setStatus(cardTransaction.getStatus().toString());
         cardTransactionEntity.setCreatedAt(cardTransaction.getCreatedAt());
         cardTransactionEntity.setUpdatedAt(cardTransaction.getUpdatedAt());
 

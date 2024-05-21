@@ -4,6 +4,7 @@ import br.com.brunogodoif.vrminiautorizador.application.domain.entity.exceptions
 import spock.lang.Specification
 
 class CardNumberSpec extends Specification {
+
     def "Should create CardNumber with valid number"() {
         when:
         def cardNumber = new CardNumber("1234567890123456")
@@ -19,4 +20,5 @@ class CardNumberSpec extends Specification {
         then:
         thrown(InvalidCardNumberException)
     }
+
 }

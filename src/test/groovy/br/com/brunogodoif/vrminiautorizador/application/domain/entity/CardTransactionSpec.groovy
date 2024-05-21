@@ -5,6 +5,7 @@ import spock.lang.Specification
 import java.time.LocalDateTime
 
 class CardTransactionSpec extends Specification {
+
     def "Should create CardTransaction with valid card and values"() {
         given:
         UUID id = UUID.randomUUID()
@@ -20,7 +21,7 @@ class CardTransactionSpec extends Specification {
         LocalDateTime updatedAt = LocalDateTime.now()
 
         when:
-        def transaction = new CardTransaction(id, card, value, previousBalance, newBalance, "SUCCESS", createdAt, updatedAt)
+        def transaction = new CardTransaction(id, card, value, previousBalance, newBalance, TransactionStatus.OK, createdAt, updatedAt)
 
         then:
         transaction.getId() == id
@@ -28,7 +29,7 @@ class CardTransactionSpec extends Specification {
         transaction.getValue().compareTo(value) == 0
         transaction.getPreviousBalance().compareTo(previousBalance) == 0
         transaction.getNewBalance().compareTo(newBalance) == 0
-        transaction.getStatus() == "SUCCESS"
+        transaction.getStatus() == TransactionStatus.OK
         transaction.getCreatedAt() == createdAt
         transaction.getUpdatedAt() == updatedAt
     }
@@ -46,13 +47,14 @@ class CardTransactionSpec extends Specification {
         BigDecimal newBalance = BigDecimal.valueOf(600.00)
 
         when:
-        def transaction = new CardTransaction(card, value, previousBalance, newBalance, "SUCCESS")
+        def transaction = new CardTransaction(card, value, previousBalance, newBalance, TransactionStatus.OK)
 
         then:
         transaction.getCard() == card
         transaction.getValue().compareTo(value) == 0
         transaction.getPreviousBalance().compareTo(previousBalance) == 0
         transaction.getNewBalance().compareTo(newBalance) == 0
-        transaction.getStatus() == "SUCCESS"
+        transaction.getStatus() == TransactionStatus.OK
     }
+
 }

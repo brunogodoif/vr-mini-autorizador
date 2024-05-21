@@ -4,6 +4,7 @@ import br.com.brunogodoif.vrminiautorizador.application.domain.entity.exceptions
 import spock.lang.Specification
 
 class CardPasswordSpec extends Specification {
+
     def "Should create CardPassword with valid password"() {
         when:
         def cardPassword = new CardPassword("1234")
@@ -19,4 +20,5 @@ class CardPasswordSpec extends Specification {
         then:
         thrown(InvalidCardPasswordException)
     }
+
 }

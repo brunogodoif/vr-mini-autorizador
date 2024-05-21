@@ -4,6 +4,7 @@ import br.com.brunogodoif.vrminiautorizador.application.domain.entity.exceptions
 import spock.lang.Specification
 
 class CardUpdateBalanceSpec extends Specification {
+
     def "Should create CardUpdateBalance with valid card and amount"() {
         given:
         def cardNumber = new CardNumber("1234567890123456")
@@ -26,4 +27,5 @@ class CardUpdateBalanceSpec extends Specification {
         then:
         thrown(InvalidBalanceUpdateException)
     }
+
 }

@@ -7,7 +7,6 @@ import br.com.brunogodoif.vrminiautorizador.infrastructure.gateways.exceptions.C
 import br.com.brunogodoif.vrminiautorizador.infrastructure.mapper.CardMapper;
 import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.entities.CardEntity;
 import br.com.brunogodoif.vrminiautorizador.infrastructure.persistence.repositories.CardRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +38,6 @@ public class CardGateway implements CardGatewayInterface {
     }
 
     @Override
-    @Transactional
     public boolean updateBalance(CardUpdateBalance cardUpdateBalance) {
         Optional<CardEntity> cardEntityOpt = cardRepository.findByCardNumber(cardUpdateBalance.getCard().getNumber());
         if (cardEntityOpt.isEmpty())

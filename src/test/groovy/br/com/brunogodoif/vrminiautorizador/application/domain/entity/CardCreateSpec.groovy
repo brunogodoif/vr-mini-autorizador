@@ -1,10 +1,13 @@
 package br.com.brunogodoif.vrminiautorizador.application.domain.entity
 
+
+import br.com.brunogodoif.vrminiautorizador.application.domain.entity.exceptions.InvalidCardCreateException
 import br.com.brunogodoif.vrminiautorizador.application.domain.entity.exceptions.InvalidCardNumberException
 import br.com.brunogodoif.vrminiautorizador.application.domain.entity.exceptions.InvalidCardPasswordException
 import spock.lang.Specification
 
 class CardCreateSpec extends Specification {
+
     def "Should correctly assign values from constructor in CardCreate"() {
         given:
         def cardNumber = new CardNumber("1234567890123456")
@@ -56,4 +59,16 @@ class CardCreateSpec extends Specification {
         then:
         thrown(InvalidCardPasswordException)
     }
+
+    def "Should throw InvalidCardCreateException when creating CardCreate with invalid balance value"() {
+        when:
+        def cardNumber = new CardNumber("1234567890123456")
+        def cardPassword = new CardPassword("1234")
+        BigDecimal balance = BigDecimal.ZERO
+        new CardCreate(cardNumber, cardPassword, balance)
+
+        then:
+        thrown(InvalidCardCreateException)
+    }
+
 }

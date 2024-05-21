@@ -4,6 +4,7 @@ package br.com.brunogodoif.vrminiautorizador.application.domain.entity
 import spock.lang.Specification
 
 class CardSpec extends Specification {
+
     def "Card full constructor sets properties correctly"() {
         given:
         UUID id = UUID.randomUUID()
@@ -33,4 +34,5 @@ class CardSpec extends Specification {
         card.cardNumber == cardNumber
         card.cardPassword == cardPassword
     }
+
 }

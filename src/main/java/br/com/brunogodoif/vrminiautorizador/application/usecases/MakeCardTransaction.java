@@ -10,6 +10,7 @@ import br.com.brunogodoif.vrminiautorizador.application.usecases.exceptions.Inva
 import br.com.brunogodoif.vrminiautorizador.infrastructure.controllers.dtos.request.CardTransactionRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -21,7 +22,8 @@ public class MakeCardTransaction implements MakeCardTransactionInterface {
     private final CardTransactionGatewayInterface cardTransactionGateway;
 
 
-    public void execute(CardTransactionRequest cardTransactionRequest) {
+    @Transactional
+    public boolean execute(CardTransactionRequest cardTransactionRequest) {
 
         Card cardToTransaction = new Card(
                 new CardNumber(cardTransactionRequest.numeroCartao()),
@@ -32,11 +34,11 @@ public class MakeCardTransaction implements MakeCardTransactionInterface {
             throw new CardNotFoundException(TransactionStatus.CARTAO_INEXISTENTE.toString());
 
         Card card = cardGateway.getCard(cardToTransaction.getCardNumber().getNumber());
-        BigDecimal transactionValue = BigDecimal.valueOf(cardTransactionRequest.valor());
 
         if (!card.getCardPassword().getPassword().equals(cardTransactionRequest.senhaCartao()))
             throw new InvalidPasswordException(TransactionStatus.SENHA_INVALIDA.toString());
 
+        BigDecimal transactionValue = BigDecimal.valueOf(cardTransactionRequest.valor());
         if (card.getBalance().compareTo(transactionValue) < 0) {
             CardTransactionCreate cardTransaction = buildTransactionToPersist(card, transactionValue, TransactionStatus.SALDO_INSUFICIENTE);
             cardTransactionGateway.persistTransaction(cardTransaction);
@@ -49,6 +51,7 @@ public class MakeCardTransaction implements MakeCardTransactionInterface {
         CardUpdateBalance cardUpdateBalance = new CardUpdateBalance(new CardNumber(cardTransactionRequest.numeroCartao()), cardTransaction.getNewBalance());
         cardGateway.updateBalance(cardUpdateBalance);
 
+        return true;
     }
 
     private CardTransactionCreate buildTransactionToPersist(Card card, BigDecimal transactionValue, TransactionStatus status) {

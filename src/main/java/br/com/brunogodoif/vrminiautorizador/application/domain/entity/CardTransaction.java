@@ -12,12 +12,12 @@ public class CardTransaction {
     private final BigDecimal value;
     private final BigDecimal previousBalance;
     private final BigDecimal newBalance;
-    private final String status;
+    private final TransactionStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
 
-    public CardTransaction(UUID id, Card card, BigDecimal value, BigDecimal previousBalance, BigDecimal newBalance, String status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public CardTransaction(UUID id, Card card, BigDecimal value, BigDecimal previousBalance, BigDecimal newBalance, TransactionStatus status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.card = card;
         this.value = value;
@@ -28,7 +28,7 @@ public class CardTransaction {
         this.updatedAt = updatedAt;
     }
 
-    public CardTransaction(Card card, BigDecimal value, BigDecimal previousBalance, BigDecimal newBalance, String status) {
+    public CardTransaction(Card card, BigDecimal value, BigDecimal previousBalance, BigDecimal newBalance, TransactionStatus status) {
         this.card = card;
         this.value = value;
         this.previousBalance = previousBalance;
@@ -56,7 +56,7 @@ public class CardTransaction {
         return newBalance;
     }
 
-    public String getStatus() {
+    public TransactionStatus getStatus() {
         return status;
     }
 
