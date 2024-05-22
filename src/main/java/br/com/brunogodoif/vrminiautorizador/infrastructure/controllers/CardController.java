@@ -49,7 +49,7 @@ public class CardController {
         validateCardNumber(numeroCartao);
 
         BigDecimal balance = getBalance.execute(numeroCartao);
-        return ResponseEntity.status(HttpStatus.CREATED).body(balance);
+        return ResponseEntity.status(HttpStatus.OK).body(balance);
     }
 
     private void validateCardNumber(String numeroCartao) {

@@ -8,10 +8,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @TestConfiguration
 @Testcontainers
-public class TestcontainersConfig {
+public class TestContainersDatabaseConfig {
 
     @Container
-    private MySQLContainer<?> mysqlContainer = new MySQLContainer<>("mysql:8.0.28")
+    private final MySQLContainer<?> mysqlContainer = new MySQLContainer<>("mysql:8.0.28")
             .withUsername("root")
             .withPassword("password")
             .withDatabaseName("test_db");
