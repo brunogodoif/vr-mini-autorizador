@@ -25,7 +25,7 @@ public class CardUpdateBalance {
 
     public void validate() {
 
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0)
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) < 0)
             throw new InvalidBalanceUpdateException("O valor deve ser maior que 0.00");
 
     }

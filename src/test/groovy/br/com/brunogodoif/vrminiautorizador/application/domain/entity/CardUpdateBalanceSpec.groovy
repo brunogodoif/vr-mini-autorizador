@@ -17,12 +17,12 @@ class CardUpdateBalanceSpec extends Specification {
         updateBalance.getAmount().compareTo(BigDecimal.valueOf(100.0)) == 0
     }
 
-    def "Should not create CardUpdateBalance with amount less or equal to zero"() {
+    def "Should not create CardUpdateBalance with amount less to zero"() {
         given:
         def cardNumber = new CardNumber("1234567890123456")
 
         when:
-        new CardUpdateBalance(cardNumber, BigDecimal.valueOf(0.0))
+        new CardUpdateBalance(cardNumber, BigDecimal.valueOf(-100.0))
 
         then:
         thrown(InvalidBalanceUpdateException)
